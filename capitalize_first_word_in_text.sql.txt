@@ -1,0 +1,16 @@
+Question: 
+Capitalize First Letters
+Interview Question Date: October 2024 :Cisco Systems
+
+Convert the first letter of each word found in content_text to uppercase, while keeping the rest of the letters lowercase.
+
+Your output should include the original text in one column and the modified text in another column.
+Table: user_content
+user_content
+CONTENT_ID:NUMBER
+CUSTOMER_ID:NUMBER
+CONTENT_TYPE:VARCHAR2
+CONTENT_TEXT:VARCHAR2
+
+Answer: select content_text,INITCAP(content_text) as modified_content_text
+from user_content;
