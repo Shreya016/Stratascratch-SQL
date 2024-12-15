@@ -1,0 +1,18 @@
+Question:
+
+Calculate the total number of interactions and the total number of contents created for each customer. Include all interaction types and content types in your calculations.
+
+Your output should include the customer's ID, the total number of interactions, and the total number of content items.
+Tables: customer_interactions, user_content
+
+Answer:
+with cus_interactions as(
+select customer_id, count(*) as tot_interaction_type from customer_interactions group by customer_id
+),
+user_content as (
+select customer_id, count(*) as tot_content_type from user_content group by customer_id
+)
+select 
+i.customer_id,coalesce(i.tot_interaction_type,0) as tot_interaction_type,coalesce(j.tot_content_type,0) as tot_content_type
+from cus_interactions i
+left join user_content j on i.customer_id=j.customer_id;
