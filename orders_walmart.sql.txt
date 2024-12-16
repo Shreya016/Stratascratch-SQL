@@ -1,0 +1,28 @@
+Question:
+Identify users who started a session and placed an order on the same day. For these users, calculate the total number of orders and the total order value for that day.
+
+Your output should include the user, the session date, the total number of orders, and the total order value for that day.
+
+sessions:
+
+session_date:date
+timesession_id:bigint
+user_id:bigint
+
+order_summary:
+order_date:date
+timeorder_id:bigint
+order_value:bigint
+user_id:bigint
+
+
+Answer:
+select
+a.user_id,
+a.session_date,
+count(b.order_id) as total_no_of_orders,
+sum(b.order_value) as total_value_of_orders
+
+from sessions a inner join
+order_summary b on a.user_id=b.user_id and a.session_date=b.order_date
+group by a.session_date,a.user_id;
