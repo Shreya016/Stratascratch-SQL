@@ -1,0 +1,34 @@
+Question:
+Identify the top 3 areas with the highest customer density. Customer density = (total number of unique customers in the area / area size).
+
+Your output should include the area name and its calculated customer density, and ties will be ranked the same.
+
+transaction_records
+customer_id:bigint
+store_id:bigint
+transaction_amount:bigint
+transaction_date:datetime
+transaction_id:bigint
+
+stores
+area_name:text
+area_size:bigint
+store_id:bigint
+store_location:text
+store_open_date:datetime
+
+
+Answer:
+with unique_cus as(
+select 
+count(distinct customer_id) as unique_customers,
+b.area_name, count(distinct customer_id)/NULLIF(b.area_size,0) as customer_density
+from transaction_records a inner join stores b on a.store_id=b.store_id group by b.area_name
+)
+,ranking as(
+select 
+area_name, customer_density,
+dense_rank() over (order by customer_density desc) as rk
+from unique_cus 
+) select * from ranking where rk<=3;
+
