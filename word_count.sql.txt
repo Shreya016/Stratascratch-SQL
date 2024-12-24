@@ -1,0 +1,11 @@
+
+Question:
+Find the number of words in each business name. Avoid counting special symbols as words (e.g. &). Output the business name and its count of words.
+
+
+Answer: In Oracle
+
+select 
+business_name,
+regexp_count(regexp_replace(business_name,'[^A-Za-z0-9 ]',''),'\S+') as count_of_words
+from sf_restaurant_health_violations
